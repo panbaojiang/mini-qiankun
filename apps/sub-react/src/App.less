@@ -1,0 +1,233 @@
+// React子应用样式 - 使用Less
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+// 变量定义
+@primary-color: #6366f1;
+@primary-hover: #4f46e5;
+@secondary-color: #f8fafc;
+@text-primary: #1e293b;
+@text-secondary: #64748b;
+@border-color: #e2e8f0;
+@shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+@shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+@shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+@border-radius: 12px;
+@transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// 全局样式
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  line-height: 1.6;
+  color: @text-primary;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 100vh;
+}
+
+// React应用容器
+.react-app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .app-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: @text-primary;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, @primary-color, @primary-hover);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: @text-secondary;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+  }
+
+  .app-content {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: @border-radius;
+    padding: 2rem;
+    box-shadow: @shadow-lg;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    .home-section {
+      text-align: center;
+
+      h3 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: @text-primary;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1rem;
+        color: @text-secondary;
+        margin-bottom: 2rem;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+
+        .feature-card {
+          background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+          border-radius: @border-radius;
+          padding: 1.5rem;
+          box-shadow: @shadow-md;
+          border: 1px solid @border-color;
+          transition: @transition;
+
+          &:hover {
+            transform: translateY(-4px);
+            box-shadow: @shadow-lg;
+          }
+
+          .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, @primary-color, @primary-hover);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.2rem;
+          }
+
+          h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: @text-primary;
+            margin-bottom: 0.5rem;
+          }
+
+          p {
+            font-size: 0.9rem;
+            color: @text-secondary;
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, @primary-color, @primary-hover);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: @transition;
+        margin-top: 1rem;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .react-app {
+    padding: 1rem;
+
+    .app-header {
+      h2 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    .app-content {
+      padding: 1.5rem;
+
+      .home-section {
+        .feature-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+    }
+  }
+}
+
+// 动画效果
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.react-app {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.app-content {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+// 加载状态
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid @border-color;
+    border-top: 4px solid @primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

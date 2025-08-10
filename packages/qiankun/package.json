@@ -1,0 +1,30 @@
+{
+  "name": "@qiankun-dom/qiankun",
+  "version": "1.0.0",
+  "description": "Qiankun DOM utilities",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "es",
+    "lib",
+    "dist"
+  ],
+  "scripts": {
+    "build": "father build",
+    "dev": "father dev",
+    "clean": "father clean",
+    "prepublishOnly": "father build"
+  },
+  "keywords": [
+    "qiankun",
+    "micro-frontend",
+    "dom"
+  ],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "dependencies": {
+    "@qiankun-dom/single-spa": "workspace:*"
+  }
+}
