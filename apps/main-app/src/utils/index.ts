@@ -21,7 +21,7 @@ export function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
+  let timeout: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -35,7 +35,7 @@ export function throttle<T extends (...args: any[]) => any>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout | null = null;
+  let timeout: ReturnType<typeof setTimeout> | null = null;
   return (...args: Parameters<T>) => {
     if (!timeout) {
       timeout = setTimeout(() => {
@@ -57,5 +57,5 @@ export function generateId(): string {
  * 检查是否为开发环境
  */
 export function isDevelopment(): boolean {
-  return process.env.NODE_ENV === 'development';
+  return import.meta.env.VITE_APP_ENV === 'development';
 }
