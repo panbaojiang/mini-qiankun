@@ -124,7 +124,7 @@ jobs: # 定义任务
 
       - name: Deploy to GitHub Pages # 部署到GitHub Pages
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' # 只在master/main分支部署
-        uses: peaceiris/actions-gh-pages@v3 # 使用 actions-gh-pages 部署
+        uses: peaceiris/actions-gh-pages@v4 # 使用 actions-gh-pages 部署
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }} # 使用 GITHUB_TOKEN 作为缓存凭证
           publish_dir: apps/main-app/dist # 要进行部署的目录
