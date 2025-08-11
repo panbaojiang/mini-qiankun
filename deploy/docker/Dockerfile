@@ -5,12 +5,19 @@ WORKDIR /app
 
 # 安装 pnpm 和依赖
 RUN npm install -g pnpm@10.13.1
+
+# 复制所有配置文件
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/ ./packages/
+
+# 安装所有依赖（包括workspace依赖）
 RUN pnpm install --frozen-lockfile
 
-# 构建公共包
-COPY packages/ ./packages/
-RUN pnpm run build:packages
+# 显示依赖安装结果
+RUN pnpm list --depth=0
+
+# 构建公共包（添加详细输出）
+RUN pnpm run build:packages --verbose
 
 # 构建子应用（利用缓存）
 COPY apps/ ./apps/
