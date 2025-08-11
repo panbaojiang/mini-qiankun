@@ -2,33 +2,28 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [master, main]
+    branches: [master]
   pull_request:
-    branches: [master, main]
+    branches: [master]
 
 env:
-  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_IMAGE_NAME || 'qiankun-app' }}
-  DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY || 'docker.io' }}
+  DOCKER_IMAGE_NAME: qiankun-app
+  DOCKER_REGISTRY: ${{ secrets.REGISTRY_URL }}
 
 jobs:
-  build-and-deploy:
+  build-and-push:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-    environment: production
-
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Registry
+      - name: Login to Tencent Cloud Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.DOCKER_REGISTRY }}
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ${{ secrets.REGISTRY_URL }}
+          username: ${{ secrets.TCR_USERNAME }}
+          password: ${{ secrets.TCR_PASSWORD }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -37,13 +32,17 @@ jobs:
           file: ./deploy/docker/Dockerfile
           push: true
           tags: |
-            ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
-            ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+            ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+            ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64
 
-      - name: Deploy to Server
+  deploy-to-server:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Tencent Cloud
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -51,31 +50,25 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            # 拉取最新镜像并重启容器
-            docker pull ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+            # 拉取最新镜像
+            docker pull ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+
+            # 停止旧容器
             docker stop qiankun-app || true
             docker rm qiankun-app || true
+
+            # 运行新容器
             docker run -d \
               --name qiankun-app \
               --restart unless-stopped \
               -p 80:80 \
               -v ~/qiankun-deploy/logs:/var/log/nginx \
-              ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+              ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest
 
             # 健康检查
+            sleep 10
             if ! curl -f http://localhost/health; then
-              echo "Health check failed!"
+              echo "Deployment failed!"
               docker logs qiankun-app
               exit 1
             fi
-
-  deploy-status:
-    runs-on: ubuntu-latest
-    needs: build-and-deploy
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-    environment: production
-    steps:
-      - name: Check deployment status
-        run: |
-          echo "Docker App: http://${{ secrets.SERVER_HOST }}"
-          echo "Health Check: http://${{ secrets.SERVER_HOST }}/health"
