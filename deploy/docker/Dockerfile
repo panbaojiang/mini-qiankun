@@ -30,9 +30,7 @@ COPY --from=builder /app/apps/sub-vue3/dist /usr/share/nginx/html/sub-vue3
 
 # 合并 Nginx 配置（避免覆盖默认配置）
 COPY deploy/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-RUN cat /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.bak && \
-    cat deploy/nginx/nginx.conf > /etc/nginx/nginx.conf && \
-    echo "include /etc/nginx/nginx.conf.bak;" >> /etc/nginx/nginx.conf
+COPY deploy/nginx/nginx.conf /etc/nginx/nginx.conf
 
 # 清理临时文件
 RUN rm -rf /app /root/.npm /tmp/*
