@@ -8,6 +8,7 @@ RUN npm install -g pnpm@10.13.1
 
 # 复制所有配置文件
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY .fatherrc.cjs ./
 COPY packages/ ./packages/
 
 # 安装所有依赖（包括workspace依赖）
