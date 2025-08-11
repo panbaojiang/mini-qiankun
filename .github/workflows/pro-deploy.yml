@@ -58,13 +58,7 @@ jobs:
             sudo docker pull ${{ secrets.REGISTRY_URL }}:latest 
             sudo docker stop qiankun-app || true 
             sudo docker rm qiankun-app || true 
-            sudo docker run -d \ 
-              --name qiankun-app \ 
-              --restart unless-stopped \ 
-              -p 80:80 \ 
-              -v ~/qiankun-deploy/logs:/var/log/nginx \ 
-              ${{ secrets.REGISTRY_URL }}:latest 
-
+            sudo docker run -d --name qiankun-app --restart unless-stopped -p 80:80 -v ~/qiankun-deploy/logs:/var/log/nginx ${{ secrets.REGISTRY_URL }}:latest 
             sleep 10 
             if ! curl -f http://localhost/health; then 
               echo "Deployment failed!" 
