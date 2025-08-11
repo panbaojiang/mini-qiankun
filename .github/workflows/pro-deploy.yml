@@ -52,7 +52,7 @@ jobs:
         with:
           host: ${{ secrets.SERVER_HOST }} # 服务器地址
           username: ${{ secrets.SERVER_USERNAME }} # 用户名
-          password: ${{ secrets.SERVER_PASSWORD }} # 密码
+          key: ${{ secrets.SERVER_PASSWORD }} # 密码
           port: ${{ secrets.SERVER_PORT }} # 端口
           script: |
             docker pull ${{ secrets.REGISTRY_URL }}:latest 
