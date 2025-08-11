@@ -7,7 +7,7 @@ on:
     branches: [master] # 只在 master 分支创建 PR 时触发
 
 env:
-  DOCKER_IMAGE_NAME: qiankun-app # 镜像名称
+  DOCKER_IMAGE_NAME: qiankun-app # 镜像名称，与腾讯云仓库名称一致
   DOCKER_REGISTRY: ${{ secrets.REGISTRY_URL }} # 镜像仓库
 
 jobs:
@@ -55,8 +55,26 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }} # 密码
           port: ${{ secrets.SERVER_PORT }} # 端口
           script: |
-            # 拉取最新镜像
-            docker pull ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest # 拉取最新镜像
+            # 检查镜像是否存在，如果不存在则本地构建
+            if ! docker pull ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest; then
+              echo "镜像不存在，开始本地构建..."
+              
+              # 检出代码到临时目录
+              cd /tmp
+              git clone https://github.com/${{ github.repository }}.git qiankun-temp
+              cd qiankun-temp
+              
+              # 本地构建镜像
+              docker build -t ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest -f deploy/docker/Dockerfile .
+              
+              # 清理临时目录
+              cd /
+              rm -rf /tmp/qiankun-temp
+              
+              echo "本地构建完成"
+            else
+              echo "镜像拉取成功"
+            fi
 
             # 停止旧容器
             docker stop qiankun-app || true # 停止旧容器
