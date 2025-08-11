@@ -10,6 +10,7 @@ RUN npm install -g pnpm@10.13.1
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY .fatherrc.cjs ./
 COPY packages/ ./packages/
+COPY apps/ ./apps/
 
 # 安装所有依赖（包括workspace依赖）
 RUN pnpm install --frozen-lockfile
@@ -20,8 +21,7 @@ RUN pnpm list --depth=0
 # 构建公共包（添加详细输出）
 RUN pnpm run build:packages --verbose
 
-# 构建子应用（利用缓存）
-COPY apps/ ./apps/
+# 构建子应用
 RUN cd apps/main-app && pnpm build
 RUN cd apps/sub-react && pnpm build
 RUN cd apps/sub-vue2 && pnpm build
