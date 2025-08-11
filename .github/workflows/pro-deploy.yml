@@ -55,12 +55,10 @@ jobs:
           key: ${{ secrets.SERVER_PASSWORD }} # 密码
           port: ${{ secrets.SERVER_PORT }} # 端口
           script: |
-            docker pull ${{ secrets.REGISTRY_URL }}:latest 
-
-            docker stop qiankun-app || true 
-            docker rm qiankun-app || true 
-
-            docker run -d \ 
+            sudo docker pull ${{ secrets.REGISTRY_URL }}:latest 
+            sudo docker stop qiankun-app || true 
+            sudo docker rm qiankun-app || true 
+            sudo docker run -d \ 
               --name qiankun-app \ 
               --restart unless-stopped \ 
               -p 80:80 \ 
@@ -70,6 +68,6 @@ jobs:
             sleep 10 
             if ! curl -f http://localhost/health; then 
               echo "Deployment failed!" 
-              docker logs qiankun-app 
+              sudo docker logs qiankun-app 
               exit 1
             fi
