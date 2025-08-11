@@ -2,9 +2,17 @@
   "name": "@qiankun/loader",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "father build",
+    "dev": "father dev",
+    "clean": "father clean",
+    "prepublishOnly": "father build"
   },
   "keywords": [],
   "author": "",
