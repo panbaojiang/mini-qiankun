@@ -7,7 +7,7 @@ on:
     branches: [master] # 只在 master 分支创建 PR 时触发
 
 env:
-  DOCKER_IMAGE_NAME: docker # 镜像名称，与腾讯云仓库名称一致
+  DOCKER_IMAGE_NAME: qiankun-app # 镜像名称，与腾讯云仓库名称一致
   DOCKER_REGISTRY: ${{ secrets.REGISTRY_URL }} # 镜像仓库
 
 jobs:
@@ -55,25 +55,21 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }} # 密码
           port: ${{ secrets.SERVER_PORT }} # 端口
           script: |
-            # 拉取最新镜像
-            docker pull ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest # 拉取最新镜像
+            docker pull ${{ secrets.REGISTRY_URL }}:latest 
 
-            # 停止旧容器
-            docker stop qiankun-app || true # 停止旧容器
-            docker rm qiankun-app || true # 删除旧容器
+            docker stop qiankun-app || true 
+            docker rm qiankun-app || true 
 
-            # 运行新容器
-            docker run -d \ # 运行新容器
-              --name qiankun-app \ # 容器名称
-              --restart unless-stopped \ # 自动重启
-              -p 80:80 \ # 端口映射
-              -v ~/qiankun-deploy/logs:/var/log/nginx \ # 日志目录
-              ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest # 镜像标签
+            docker run -d \ 
+              --name qiankun-app \ 
+              --restart unless-stopped \ 
+              -p 80:80 \ 
+              -v ~/qiankun-deploy/logs:/var/log/nginx \ 
+              ${{ secrets.REGISTRY_URL }}:latest 
 
-            # 健康检查
-            sleep 10 # 等待10秒
-            if ! curl -f http://localhost/health; then # 健康检查
-              echo "Deployment failed!" # 部署失败
-              docker logs qiankun-app # 查看日志
+            sleep 10 
+            if ! curl -f http://localhost/health; then 
+              echo "Deployment failed!" 
+              docker logs qiankun-app 
               exit 1
             fi
