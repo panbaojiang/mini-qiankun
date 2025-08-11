@@ -1,4 +1,4 @@
-name: Build and Deploy  # 构建和部署
+name: Build and Deploy # 构建和部署
 
 on:
   push: # 当有代码推送到仓库时触发
@@ -37,7 +37,7 @@ jobs:
           file: ./deploy/docker/Dockerfile # 指定Dockerfile文件
           push: true # 推送镜像到仓库
           tags: |
-            ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest # 镜像标签
+            ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:latest
             ${{ secrets.REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
           cache-from: type=gha # 缓存来源
           cache-to: type=gha,mode=max # 缓存目标
