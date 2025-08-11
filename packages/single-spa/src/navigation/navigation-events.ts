@@ -8,13 +8,16 @@ const originalAddEventListener = window.addEventListener;
 const originalRemoveEventListener = window.removeEventListener;
 
 // 捕获的事件监听器
-const capturedEventListeners = {
+const capturedEventListeners: {
+  [key: string]: EventListener[];
+} = {
   hashchange: [],
   popstate: [],
 };
 
 // 路由事件类型
-export const routingEventsListeningTo = ["hashchange", "popstate"];
+export const routingEventsListeningTo = ["hashchange", "popstate"] as const;
+type RoutingEventType = (typeof routingEventsListeningTo)[number];
 
 // 格式化错误消息
 function formatErrorMessage(code: number, message?: string): string {
@@ -98,17 +101,22 @@ export function navigateToUrl(obj: string | Event | { href: string }): void {
 export function callCapturedEventListeners(eventArguments?: any[]): void {
   if (eventArguments) {
     const eventType = eventArguments[0].type;
-    if (routingEventsListeningTo.indexOf(eventType) >= 0) {
-      capturedEventListeners[eventType].forEach((listener) => {
-        try {
-          // 应用事件监听器抛出的错误不应该破坏 single-spa
-          listener.apply(this, eventArguments);
-        } catch (e) {
-          setTimeout(() => {
-            throw e;
-          });
-        }
-      });
+    if (routingEventsListeningTo.indexOf(eventType as RoutingEventType) >= 0) {
+      const listeners = capturedEventListeners[eventType];
+      if (listeners) {
+        listeners.forEach((listener) => {
+          try {
+            // 应用事件监听器抛出的错误不应该破坏 single-spa
+            if (eventArguments.length > 0) {
+              listener.call(null, eventArguments[0]);
+            }
+          } catch (e) {
+            setTimeout(() => {
+              throw e;
+            });
+          }
+        });
+      }
     }
   }
 }
@@ -123,7 +131,7 @@ function urlReroute(): void {
 
 // 补丁更新状态方法
 function patchedUpdateState(updateState: Function, methodName: string) {
-  return function (...args: any[]) {
+  return function (this: any, ...args: any[]) {
     const urlBefore = window.location.href;
     const result = updateState.apply(this, args);
     const urlAfter = window.location.href;
@@ -167,15 +175,21 @@ export function patchHistoryApi(opts?: { urlRerouteOnly?: boolean }): void {
   ) {
     if (typeof fn === "function") {
       if (
-        routingEventsListeningTo.indexOf(eventName) >= 0 &&
-        !find(capturedEventListeners[eventName], (listener) => listener === fn)
+        routingEventsListeningTo.indexOf(eventName as RoutingEventType) >= 0 &&
+        !find(
+          capturedEventListeners[eventName] || [],
+          (listener) => listener === fn
+        )
       ) {
+        if (!capturedEventListeners[eventName]) {
+          capturedEventListeners[eventName] = [];
+        }
         capturedEventListeners[eventName].push(fn as EventListener);
         return;
       }
     }
 
-    return originalAddEventListener.apply(this, arguments);
+    return originalAddEventListener.call(this, eventName, fn);
   };
 
   (window as any).removeEventListener = function (
@@ -183,14 +197,19 @@ export function patchHistoryApi(opts?: { urlRerouteOnly?: boolean }): void {
     listenerFn: EventListenerOrEventListenerObject
   ) {
     if (typeof listenerFn === "function") {
-      if (routingEventsListeningTo.indexOf(eventName) >= 0) {
-        capturedEventListeners[eventName] = capturedEventListeners[
-          eventName
-        ].filter((fn) => fn !== listenerFn);
+      if (
+        routingEventsListeningTo.indexOf(eventName as RoutingEventType) >= 0
+      ) {
+        const listeners = capturedEventListeners[eventName];
+        if (listeners) {
+          capturedEventListeners[eventName] = listeners.filter(
+            (fn) => fn !== listenerFn
+          );
+        }
       }
     }
 
-    return originalRemoveEventListener.apply(this, arguments);
+    return originalRemoveEventListener.call(this, eventName, listenerFn);
   };
 
   window.history.pushState = patchedUpdateState(
