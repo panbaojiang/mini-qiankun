@@ -68,6 +68,73 @@ pnpm run dev:react
 pnpm run build
 ```
 
+## 部署
+
+### 自动部署 (GitHub Actions)
+
+项目配置了完整的 CI/CD 流程，支持自动部署到 GitHub Pages 和 Docker 服务器。
+
+#### 前置条件
+
+1. 在 GitHub 仓库的 `Settings > Secrets and variables > Actions` 中添加以下 secrets：
+
+   - `SERVER_HOST`: 服务器 IP 地址
+   - `SERVER_USERNAME`: 服务器用户名
+   - `SERVER_PASSWORD`: 服务器密码
+   - `SERVER_PORT`: SSH 端口（通常是 22）
+
+2. 确保服务器已安装 Docker
+
+#### 部署流程
+
+当代码推送到 `master` 或 `main` 分支时，GitHub Actions 会自动：
+
+1. 运行测试和代码检查
+2. 构建所有应用
+3. 部署到 GitHub Pages
+4. 构建 Docker 镜像
+5. 部署到服务器并启动容器
+
+### 手动部署
+
+#### 使用 Docker Compose
+
+```bash
+cd deploy
+docker-compose up -d
+```
+
+#### 使用部署脚本
+
+```bash
+cd deploy/scripts
+chmod +x deploy.sh
+./deploy.sh
+```
+
+#### 手动 Docker 命令
+
+```bash
+# 构建镜像
+docker build -t qiankun-app -f deploy/docker/Dockerfile .
+
+# 运行容器
+docker run -d \
+  --name qiankun-app \
+  --restart unless-stopped \
+  -p 80:80 \
+  -v $(pwd)/deploy/logs:/var/log/nginx \
+  qiankun-app
+```
+
+### 应用访问
+
+- 主应用: `http://your-domain/`
+- React 子应用: `http://your-domain/sub-react/`
+- Vue2 子应用: `http://your-domain/sub-vue2/`
+- Vue3 子应用: `http://your-domain/sub-vue3/`
+- 健康检查: `http://your-domain/health`
+
 ## 特性
 
 - ✅ 微前端架构
@@ -75,3 +142,7 @@ pnpm run build
 - ✅ TypeScript 支持
 - ✅ 热重载开发
 - ✅ 独立部署能力
+- ✅ Docker 容器化部署
+- ✅ 自动化 CI/CD 流程
+- ✅ Nginx 反向代理
+- ✅ 健康检查机制

@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  qiankun-app:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    container_name: qiankun-app
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./logs:/var/log/nginx
+    networks:
+      - qiankun-network
+
+networks:
+  qiankun-network:
+    driver: bridge
