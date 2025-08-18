@@ -16,7 +16,7 @@ jobs:
     if: github.ref == 'refs/heads/master' # 只在 master 分支推送时触发
     steps:
       - name: Checkout # 检出代码
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Docker Buildx # 设置Docker Buildx
         uses: docker/setup-buildx-action@v3 # 使用官方设置Docker Buildx的action
