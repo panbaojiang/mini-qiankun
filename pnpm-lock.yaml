@@ -16,7 +16,7 @@ importers:
         version: 8.2.2
       father:
         specifier: ^4.6.2
-        version: 4.6.2(@babel/core@7.28.0)(@types/node@24.2.0)(@types/webpack@5.28.5)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(type-fest@0.20.2)(webpack-dev-server@4.15.2(webpack@5.101.0))(webpack@5.101.0)
+        version: 4.6.2(@babel/core@7.28.0)(@types/node@24.7.2)(@types/webpack@5.28.5)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(type-fest@0.20.2)(webpack-dev-server@4.15.2(webpack@5.101.0))(webpack@5.101.0)
 
   apps/main-app:
     dependencies:
@@ -35,7 +35,7 @@ importers:
         version: 19.1.7(@types/react@19.1.9)
       '@vitejs/plugin-react':
         specifier: ^4.3.4
-        version: 4.7.0(vite@5.4.19(@types/node@24.2.0)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1))
+        version: 4.7.0(vite@5.4.19(@types/node@24.7.2)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1))
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -43,14 +43,14 @@ importers:
         specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
       react-router-dom:
-        specifier: ^7.7.1
-        version: 7.7.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+        specifier: ^7.9.4
+        version: 7.9.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
       vite:
         specifier: ^5.4.11
-        version: 5.4.19(@types/node@24.2.0)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1)
+        version: 5.4.19(@types/node@24.7.2)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1)
 
   apps/sub-react:
     dependencies:
@@ -67,8 +67,8 @@ importers:
         specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
       react-router-dom:
-        specifier: ^7.7.1
-        version: 7.7.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+        specifier: ^7.9.4
+        version: 7.9.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
@@ -1808,6 +1808,9 @@ packages:
 
   '@types/node@24.2.0':
     resolution: {integrity: sha512-3xyG3pMCq3oYCNg7/ZP+E1ooTaGB4cG8JWRsqqOYQdbWNY4zbaV0Ennrd7stjiJEFZCaybcIgpTjJWHRfBSIDw==}
+
+  '@types/node@24.7.2':
+    resolution: {integrity: sha512-/NbVmcGTP+lj5oa4yiYxxeBjRivKQ5Ns1eSZeB99ExsEQ6rX5XYU1Zy/gGxY/ilqtD4Etx9mKyrPxZRetiahhA==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -5348,15 +5351,15 @@ packages:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
     engines: {node: '>=0.10.0'}
 
-  react-router-dom@7.7.1:
-    resolution: {integrity: sha512-bavdk2BA5r3MYalGKZ01u8PGuDBloQmzpBZVhDLrOOv1N943Wq6dcM9GhB3x8b7AbqPMEezauv4PeGkAJfy7FQ==}
+  react-router-dom@7.9.4:
+    resolution: {integrity: sha512-f30P6bIkmYvnHHa5Gcu65deIXoA2+r3Eb6PJIAddvsT9aGlchMatJ51GgpU470aSqRRbFX22T70yQNUGuW3DfA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
 
-  react-router@7.7.1:
-    resolution: {integrity: sha512-jVKHXoWRIsD/qS6lvGveckwb862EekvapdHJN/cGmzw40KnJH5gg53ujOJ4qX6EKIK9LSBfFed/xiQ5yeXNrUA==}
+  react-router@7.9.4:
+    resolution: {integrity: sha512-SD3G8HKviFHg9xj7dNODUKDFgpG4xqD5nhyd0mYoB5iISepuZAvzSr8ywxgxKJ52yRzf/HWtVHc9AWwoTbljvA==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -5924,6 +5927,10 @@ packages:
     resolution: {integrity: sha512-Re10+NauLTMCudc7T5WLFLAwDhQ0JWdrMK+9B2M8zR5hRExKmsRDCBA7/aV/pNJFltmBFO5BAMlQFi/vq3nKOg==}
     engines: {node: '>=6'}
 
+  tapable@2.3.0:
+    resolution: {integrity: sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==}
+    engines: {node: '>=6'}
+
   terser-webpack-plugin@5.3.14:
     resolution: {integrity: sha512-vkZjpUjb6OMS7dhV+tILUW6BhpDR7P2L/aQSAv+Uwk+m8KATX9EccViHTJR2qDtACKPIYndLGCyl3FMo+r2LMw==}
     engines: {node: '>= 10.13.0'}
@@ -6098,6 +6105,9 @@ packages:
 
   undici-types@7.10.0:
     resolution: {integrity: sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag==}
+
+  undici-types@7.14.0:
+    resolution: {integrity: sha512-QQiYxHuyZ9gQUIrmPo3IA+hUl4KYk8uSA7cHrcKd/l3p1OTpZcM0Tbp9x7FAtXdAYhlasd60ncPpgu6ihG6TOA==}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
     resolution: {integrity: sha512-dA8WbNeb2a6oQzAQ55YlT5vQAWGV9WXOsi3SskE3bcCdM0P4SDd+24zS/OCacdRq5BkdsRj9q3Pg6YyQoxIGqg==}
@@ -7652,23 +7662,23 @@ snapshots:
 
   '@leichtgewicht/ip-codec@2.0.5': {}
 
-  '@microsoft/api-extractor-model@7.28.17(@types/node@24.2.0)':
+  '@microsoft/api-extractor-model@7.28.17(@types/node@24.7.2)':
     dependencies:
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 4.3.0(@types/node@24.2.0)
+      '@rushstack/node-core-library': 4.3.0(@types/node@24.7.2)
     transitivePeerDependencies:
       - '@types/node'
 
-  '@microsoft/api-extractor@7.43.7(@types/node@24.2.0)':
+  '@microsoft/api-extractor@7.43.7(@types/node@24.7.2)':
     dependencies:
-      '@microsoft/api-extractor-model': 7.28.17(@types/node@24.2.0)
+      '@microsoft/api-extractor-model': 7.28.17(@types/node@24.7.2)
       '@microsoft/tsdoc': 0.14.2
       '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 4.3.0(@types/node@24.2.0)
+      '@rushstack/node-core-library': 4.3.0(@types/node@24.7.2)
       '@rushstack/rig-package': 0.5.2
-      '@rushstack/terminal': 0.11.0(@types/node@24.2.0)
-      '@rushstack/ts-command-line': 4.21.0(@types/node@24.2.0)
+      '@rushstack/terminal': 0.11.0(@types/node@24.7.2)
+      '@rushstack/ts-command-line': 4.21.0(@types/node@24.7.2)
       lodash: 4.17.21
       minimatch: 3.0.8
       resolve: 1.22.10
@@ -7835,7 +7845,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.46.2':
     optional: true
 
-  '@rushstack/node-core-library@4.3.0(@types/node@24.2.0)':
+  '@rushstack/node-core-library@4.3.0(@types/node@24.7.2)':
     dependencies:
       fs-extra: 7.0.1
       import-lazy: 4.0.0
@@ -7844,23 +7854,23 @@ snapshots:
       semver: 7.5.4
       z-schema: 5.0.5
     optionalDependencies:
-      '@types/node': 24.2.0
+      '@types/node': 24.7.2
 
   '@rushstack/rig-package@0.5.2':
     dependencies:
       resolve: 1.22.10
       strip-json-comments: 3.1.1
 
-  '@rushstack/terminal@0.11.0(@types/node@24.2.0)':
+  '@rushstack/terminal@0.11.0(@types/node@24.7.2)':
     dependencies:
-      '@rushstack/node-core-library': 4.3.0(@types/node@24.2.0)
+      '@rushstack/node-core-library': 4.3.0(@types/node@24.7.2)
       supports-color: 8.1.1
     optionalDependencies:
-      '@types/node': 24.2.0
+      '@types/node': 24.7.2
 
-  '@rushstack/ts-command-line@4.21.0(@types/node@24.2.0)':
+  '@rushstack/ts-command-line@4.21.0(@types/node@24.7.2)':
     dependencies:
-      '@rushstack/terminal': 0.11.0(@types/node@24.2.0)
+      '@rushstack/terminal': 0.11.0(@types/node@24.7.2)
       '@types/argparse': 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
@@ -8077,6 +8087,10 @@ snapshots:
     dependencies:
       undici-types: 7.10.0
 
+  '@types/node@24.7.2':
+    dependencies:
+      undici-types: 7.14.0
+
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/parse-json@4.0.2': {}
@@ -8122,8 +8136,8 @@ snapshots:
 
   '@types/webpack@5.28.5':
     dependencies:
-      '@types/node': 24.2.0
-      tapable: 2.2.2
+      '@types/node': 24.7.2
+      tapable: 2.3.0
       webpack: 5.101.0(webpack-cli@6.0.1(webpack-dev-server@4.15.2(webpack@5.101.0))(webpack@5.101.0))
     transitivePeerDependencies:
       - '@swc/core'
@@ -8392,7 +8406,7 @@ snapshots:
 
   '@vercel/ncc@0.33.3': {}
 
-  '@vitejs/plugin-react@4.7.0(vite@5.4.19(@types/node@24.2.0)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1))':
+  '@vitejs/plugin-react@4.7.0(vite@5.4.19(@types/node@24.7.2)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1))':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.0)
@@ -8400,7 +8414,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 5.4.19(@types/node@24.2.0)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1)
+      vite: 5.4.19(@types/node@24.7.2)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -10440,9 +10454,9 @@ snapshots:
     dependencies:
       reusify: 1.1.0
 
-  father@4.6.2(@babel/core@7.28.0)(@types/node@24.2.0)(@types/webpack@5.28.5)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(type-fest@0.20.2)(webpack-dev-server@4.15.2(webpack@5.101.0))(webpack@5.101.0):
+  father@4.6.2(@babel/core@7.28.0)(@types/node@24.7.2)(@types/webpack@5.28.5)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(type-fest@0.20.2)(webpack-dev-server@4.15.2(webpack@5.101.0))(webpack@5.101.0):
     dependencies:
-      '@microsoft/api-extractor': 7.43.7(@types/node@24.2.0)
+      '@microsoft/api-extractor': 7.43.7(@types/node@24.7.2)
       '@umijs/babel-preset-umi': 4.4.12
       '@umijs/bundler-utils': 4.4.12
       '@umijs/bundler-webpack': 4.4.12(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.4.2)(webpack-dev-server@4.15.2(webpack@5.101.0))(webpack@5.101.0)
@@ -12400,13 +12414,13 @@ snapshots:
 
   react-refresh@0.17.0: {}
 
-  react-router-dom@7.7.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+  react-router-dom@7.9.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
     dependencies:
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
-      react-router: 7.7.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      react-router: 7.9.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
 
-  react-router@7.7.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+  react-router@7.9.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
     dependencies:
       cookie: 1.0.2
       react: 19.1.1
@@ -13096,6 +13110,8 @@ snapshots:
 
   tapable@2.2.2: {}
 
+  tapable@2.3.0: {}
+
   terser-webpack-plugin@5.3.14(webpack@5.101.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.29
@@ -13265,6 +13281,8 @@ snapshots:
 
   undici-types@7.10.0: {}
 
+  undici-types@7.14.0: {}
+
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
   unicode-match-property-ecmascript@2.0.0:
@@ -13322,13 +13340,13 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite@5.4.19(@types/node@24.2.0)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1):
+  vite@5.4.19(@types/node@24.7.2)(less@4.4.0)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.43.1):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.6
       rollup: 4.46.2
     optionalDependencies:
-      '@types/node': 24.2.0
+      '@types/node': 24.7.2
       fsevents: 2.3.3
       less: 4.4.0
       lightningcss: 1.22.1
