@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.TCR_PASSWORD }} # 密码
 
       - name: Build and push Docker image # 构建和推送Docker镜像
-        uses: docker/build-push-action@v5 # 使用官方构建和推送Docker镜像的action
+        uses: docker/build-push-action@v6 # 使用官方构建和推送Docker镜像的action
         with:
           context: . # 上下文路径
           file: ./deploy/docker/Dockerfile # 指定Dockerfile文件
